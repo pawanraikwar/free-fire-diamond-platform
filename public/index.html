@@ -1183,6 +1183,8 @@
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn secondary small" id="copySecretOwnerLinkBtn" type="button">🔗 Copy Secret Owner Link</button>
           <button class="btn secondary small" id="ownerBackupBtn" type="button">💾 1-Click Download DB Backup</button>
+          <button class="btn secondary small" id="ownerRestoreBtn" type="button">📂 Restore DB Backup</button>
+          <input id="ownerRestoreInput" type="file" accept=".json,application/json" class="hidden">
         </div>
       </div>
       <div class="broadcast-box" style="margin-bottom:14px">
@@ -2020,6 +2022,7 @@ const localDemoApi = (() => {
         return { ok: true };
       }
       if (pathName === 'ownerBackup') return db;
+      if (pathName === 'ownerRestoreBackup' && body.backup) { db = { ...db, ...body.backup }; save(); return { ok: true }; }
       return { ok: true };
     }
   };
@@ -2067,6 +2070,7 @@ async function api(pathName, body) {
   try {
     const res = await fetch('/api/' + pathName, {
       method: 'POST',
+      cache: 'no-store',
       headers: { 'Content-Type': 'application/json', ...(state.token ? { Authorization: 'Bearer ' + state.token } : {}) },
       body: JSON.stringify(body || {}),
     });
@@ -2085,7 +2089,8 @@ async function api(pathName, body) {
 
 async function apiGet(pathName) {
   try {
-    const res = await fetch('/api/' + pathName, {
+    const res = await fetch('/api/' + pathName + '?_t=' + Date.now(), {
+      cache: 'no-store',
       headers: { ...(state.token ? { Authorization: 'Bearer ' + state.token } : {}) },
     });
     const ct = res.headers.get('content-type') || '';
@@ -3163,6 +3168,23 @@ $('ouBanBtn').addEventListener('click', async () => {
   } catch (e) {
     showError($('ownerNotice'), e.message);
   }
+});
+
+$('ownerRestoreBtn').addEventListener('click', () => $('ownerRestoreInput').click());
+$('ownerRestoreInput').addEventListener('change', async (ev) => {
+  const file = ev.target.files && ev.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    await api('ownerRestoreBackup', { backup: parsed });
+    showToast('✅ Database Backup Restored Successfully!', true);
+    await loadVideos();
+    await loadOwner();
+  } catch (e) {
+    showError($('ownerNotice'), 'Restore failed: ' + e.message);
+  }
+  ev.target.value = '';
 });
 
 $('ownerBackupBtn').addEventListener('click', async () => {
