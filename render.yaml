@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ff-diamond-platform
+    name: free-fire-diamond
     runtime: node
     plan: free
     buildCommand: npm install
@@ -9,7 +9,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: OWNER_USERNAME
-        value: admin
+        value: Mr.pawanraikwar
       - key: OWNER_PASSWORD
         sync: false
       - key: DATA_DIR
