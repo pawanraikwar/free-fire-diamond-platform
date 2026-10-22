@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ff-diamond-platform
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OWNER_USERNAME
+        value: admin
+      - key: OWNER_PASSWORD
+        sync: false
+      - key: DATA_DIR
+        value: ./data

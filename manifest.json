@@ -1,0 +1,10 @@
+{
+  "name": "FF Diamond \u2014 Free Fire Watch & Earn",
+  "short_name": "FF Diamond",
+  "description": "Watch Free Fire videos at 1x speed, complete Daily Missions, and redeem Diamonds to your Free Fire UID.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0e",
+  "theme_color": "#ff7a00",
+  "orientation": "portrait-primary"
+}

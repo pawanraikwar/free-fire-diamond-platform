@@ -1,0 +1,22 @@
+{
+  "name": "ff-diamond-platform",
+  "version": "2.0.0",
+  "description": "FF Diamond — Free Fire Watch & Earn Platform with 1x Speed Verification, Daily Streak, Lucky Spin, Custom Room Zone, Secret Promo Codes, and Private Owner Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "free-fire",
+    "watch-and-earn",
+    "diamonds",
+    "nodejs",
+    "pwa"
+  ],
+  "license": "MIT",
+  "dependencies": {}
+}
